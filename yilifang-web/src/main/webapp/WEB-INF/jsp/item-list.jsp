@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+
 <table class="easyui-datagrid" id="itemList" title="商品列表" 
-       data-options="singleSelect:false,collapsible:true,pagination:true,url:'/taotao-web/item/list',method:'get',pageSize:30,toolbar:toolbar">
+       data-options="singleSelect:false,collapsible:true,pagination:true,url:'/yilifang-web/item/list',method:'get',pageSize:30,toolbar:toolbar">
     <thead>
         <tr>
         	<th data-options="field:'ck',checkbox:true"></th>
@@ -17,7 +19,7 @@
         </tr>
     </thead>
 </table>
-<div id="itemEditWindow" class="easyui-window" title="编辑商品" data-options="modal:true,closed:true,iconCls:'icon-save',href:'/rest/page/item-edit'" style="width:80%;height:80%;padding:10px;">
+<div id="itemEditWindow" class="easyui-window" title="编辑商品" data-options="modal:true,closed:true,iconCls:'icon-save',href:'item-edit'" style="width:80%;height:80%;padding:10px;">
 </div>
 <script>
 
@@ -55,20 +57,21 @@
         	$("#itemEditWindow").window({
         		onLoad :function(){
         			//回显数据
+        			alert(123)
         			var data = $("#itemList").datagrid("getSelections")[0];
         			data.priceView = E3.formatPrice(data.price);
         			$("#itemeEditForm").form("load",data);
         			
         			// 加载商品描述
-        			$.getJSON('/rest/item/query/item/desc/'+data.id,function(_data){
+        			$.getJSON('/item/desc/'+data.id,function(_data){
         				if(_data.status == 200){
-        					//UM.getEditor('itemeEditDescEditor').setContent(_data.data.itemDesc, false);
-        					itemEditEditor.html(_data.data.itemDesc);
+        					//UM.getEditor('itemeEditDescEditor').setContent(_data.itemDesc, false);
+        					itemEditEditor.html(_data.itemDesc);
         				}
         			});
         			
         			//加载商品规格
-        			$.getJSON('/rest/item/param/item/query/'+data.id,function(_data){
+        			/* $.getJSON('/rest/item/param/item/query/'+data.id,function(_data){
         				if(_data && _data.status == 200 && _data.data && _data.data.paramData){
         					$("#itemeEditForm .params").show();
         					$("#itemeEditForm [name=itemParams]").val(_data.data.paramData);
@@ -93,7 +96,7 @@
         					 html+= "</ul>";
         					 $("#itemeEditForm .params td").eq(1).html(html);
         				}
-        			});
+        			}); */
         			
         			E3.init({
         				"pics" : data.image,

@@ -8,6 +8,9 @@
         <dependent-module archiveName="yilifang-manager-interface-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yilifang-manager-interface/yilifang-manager-interface">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="yilifang-manager-pojo-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yilifang-manager-pojo/yilifang-manager-pojo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="yilifang-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/yilifang-common/yilifang-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
