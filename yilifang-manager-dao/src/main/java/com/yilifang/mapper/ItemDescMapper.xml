@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yilifang.mapper.ItemDescMapper">
+	<select id="queryItemById" resultType="string" parameterType="long">
+		select  `item_desc` from  `tb_item_desc`
+	    where  `item_id`=#{itemid}
+	</select>
+</mapper>

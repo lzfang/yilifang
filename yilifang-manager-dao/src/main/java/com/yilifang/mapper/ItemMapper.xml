@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yilifang.mapper.ItemMapper">
+
+	<resultMap id="ItemResultMap" type="com.yilifang.pojo.TbItem">
+		<id property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="sellPoint" column="sell_point" />
+		<result property="price" column="price" />
+		<result property="num" column="num" />
+		<result property="barcode" column="barcode" />
+		<result property="image" column="image" />
+		<result property="cid" column="cid" />
+		<result property="status" column="status" />
+		<result property="created" column="created" />
+		<result property="updated" column="updated" />
+	</resultMap>
+
+	<sql id="Base_Item_Field">
+		`id`,`title`,`sell_point`, `price`, `num`,`barcode`, `image`, `cid`, `status`, `created`,
+		`updated`
+	</sql>
+	<select id="queryItem" resultMap="ItemResultMap">
+		select
+		<include refid="Base_Item_Field" />
+		from `tb_item`
+		<where>
+			status=1
+		</where>
+	</select>
+
+	<insert id="saveItem" parameterType="com.yilifang.pojo.TbItem">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+		     SELECT IF(MAX(id) IS NULL, 1, MAX(id) + 2) AS newId FROM tb_item
+		</selectKey>
+		insert into tb_item (id, title, sell_point,
+		price, num, barcode,
+		image, cid, status,
+		created, updated)
+		values (#{id}, #{title}, #{sellPoint},
+		#{price}, #{num}, #{barcode},
+		#{image}, #{cid}, #{status},
+		#{created}, #{updated})
+	</insert>
+	
+	<insert id="saveItemDesc" parameterType="com.yilifang.pojo.TbItem">
+		INSERT INTO `tb_item_desc` (
+	  `item_id`,
+	  `item_desc`,
+	  `created`,
+	  `updated`
+	)
+	VALUES
+	  (
+	    #{id},
+	    #{desc},
+	    #{created},
+	    #{updated}
+	  )
+	</insert>
+	<delete id="deleteItemByIds" parameterType="com.yilifang.pojo.DeleteVo">
+	   DELETE  FROM `tb_item` 
+	   <where>
+	     <foreach collection="ids" item="id" open=" id in (" close=")" separator=",">
+	       #{id}
+	     </foreach>
+	   </where>
+	</delete>
+	
+	<update id="updateItemById" parameterType="com.yilifang.pojo.TbItem">
+		  UPDATE  `tb_item`
+	      SET
+			  `title` = #{title},
+			  `sell_point` = #{sellPoint},
+			  `price` = #{price},
+			  `num` = #{num},
+			  `barcode` = #{barcode},
+			  `image` =  #{image},
+			  `cid` = #{cid},
+			  `status` = #{status},
+			  `updated` = #{updated}
+	      WHERE `id` = #{id};
+	</update>
+	
+		<update id="updateItemDescById" parameterType="com.yilifang.pojo.TbItem">
+		  UPDATE  `tb_item_desc`
+	      SET
+			  `item_desc` = #{desc},
+			  `updated` = #{updated}
+	      WHERE `item_id` = #{id};
+	</update>
+
+</mapper>
+
